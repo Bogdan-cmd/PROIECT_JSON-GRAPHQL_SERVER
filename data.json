@@ -1,0 +1,78 @@
+
+{
+  "category": [
+    {
+        "id": 1,
+        "name" : "Breakfast"
+        
+    },
+    {
+        "id" : 2,
+        "name" : "Lunch"
+    },
+    {
+      "id": 3,
+      "name" : "Dinner"
+      
+  }
+],
+
+"menu": [
+    {
+        "id": 1,
+      "price": "$10.00",
+      "name": "Scrambled eggs",
+      "description": "with Tomatos and cheese",
+      "type_id" : 1
+    },
+    {
+        "id" :2,
+      "price": "$12.00",
+      "name": "Goat",
+      "description": "with Vegetables, Macaroni and Cheese",
+      "type_id" : 3
+    },
+    {
+        "id" :3,
+      "price": "$9.00",
+      "name": "Pasta",
+      "description": "with Baked Chicken",
+      "type_id" : 1
+    },
+    {
+        "id" :4,
+      "price": "$12.00",
+      "name": "Seafood Pasta",
+      "description": "",
+      "type_id" : 1
+    },
+    {
+        "id" :5,
+      "price": "$70.00",
+      "name": "Sarmale",
+      "description": "mancare traditionala din Romania",
+      "type_id" : 1
+    },
+    {
+        "id" :6,
+        "price": "$1.50",
+        "name": "9 Fantail Jumbo Shrimp",
+        "description": "Each.",
+        "type_id" : 2
+      },
+      {
+        "id" :7,
+        "price": "$5.00",
+        "name": "20 Yat Gaw Mein Quart",
+        "description": "Pork or chicken.",
+        "type_id" : 2
+      },
+      {
+        "id" :8,
+        "price": "$25.25",
+        "name": "21 Yat Gaw Mein Quart",
+        "description": "Beef or shrimp.",
+        "type_id" : 1
+      }
+    ]
+  }

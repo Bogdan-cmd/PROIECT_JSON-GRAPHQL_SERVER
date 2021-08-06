@@ -1,0 +1,179 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="./front-end.styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title></title>
+    <script>
+
+
+
+//afiseaza categoriile in zona A
+function displayCategories() {
+       
+            configurari = {
+                url:"script.php",
+                type:"POST",
+                data: { actiune:"categorii" },
+                success: raspunsCategorii
+            }
+            $.ajax(configurari)
+        }
+       
+    function raspunsCategorii(raspuns, category_id) {
+        console.log(raspuns)
+        var cat = JSON.parse(raspuns)
+        var categorii = cat.data.allCategories
+            categorii.forEach(Afisare);
+           
+            function Afisare(categorii){
+                htmlSegment =`<div class = "elemente" id= ${categorii.id} onclick= "displayMenus(${categorii.id})"> ${categorii.name} </div>`
+                document.getElementById("deAfisat").innerHTML += htmlSegment ;
+            }
+    }
+
+    //afiseaza elemente 
+    
+    function displayMenus(value){
+      var id= value
+    
+    configurari={url:"script.php",
+                type:"POST",
+                data:{
+                actiune: "menu",
+                id: id},
+                success: afisareDetalii
+                }
+        $.ajax(configurari)
+        }
+ function afisareDetalii(raspuns)
+{
+
+   var menu = JSON.parse(raspuns)
+
+    var menuDetails = menu.data.allMenus
+    
+    document.getElementById("details").innerHTML = ""
+    menuDetails.forEach(Afisare);
+           
+            function Afisare(menuDetails){
+                
+                htmlSegment =`<div class= "components"> 
+                    <button class = "btn btn-danger"  onClick ="deleteElement(${menuDetails.id})">DELETE</button>
+                <img src = "${menuDetails.image_url}"/> 
+                     ${menuDetails.name} 
+                     ${menuDetails.price}
+                      <br> <hr>
+                    
+                 </div>`
+                 
+                document.getElementById("details").innerHTML += htmlSegment ;
+            }
+}
+//functia delete
+function deleteElement(value) {
+       var id = value
+       configurari = {
+           url:"script.php",
+           type:"POST",
+           data: { actiune:"stergere", id: id },
+           success: stergereElement
+       }
+       $.ajax(configurari)
+   }
+
+function stergereElement(raspuns) {
+   
+   var cat = JSON.parse(raspuns)
+//    var categorii = cat.data.allCategories
+//        categorii.forEach(Afisare);
+      
+//        function Afisare(categorii){
+//            htmlSegment =``
+//            document.getElementById("deAfisat").innerHTML += htmlSegment ;
+//        }
+   
+    var id = cat.data.removeMenu.Category.id 
+    
+     displayMenus(id)
+}
+
+//inserreaza
+
+
+function insertMenu() {
+    var idInserare = document.getElementById("id").value 
+    var priceInserare = document.getElementById("price").value 
+    var nameInserare = document.getElementById("name").value 
+    var descriptionInserare = document.getElementById("description").value 
+    var typeInserare = document.getElementById("type").value 
+  
+    //deInserat={}
+    
+       configurari = {
+           url:"script.php",
+           type:"POST",
+           data: { actiune:"inserare" , id:idInserare,price:priceInserare,name :nameInserare ,description:descriptionInserare , type: typeInserare },
+        //   dataType: "text",
+        //    contentType: "application/json; charset=utf-8",
+           success: raspunsMenuInserat
+       }
+       $.ajax(configurari)
+   }
+  
+function raspunsMenuInserat(raspuns) {
+    console.log(raspuns)
+   var deserialiat = JSON.parse(raspuns)
+
+   var id = deserialiat.data.createMenu.Category.id
+displayMenus(id)
+}
+    </script>
+</head>
+<body>
+    
+    <div class ="container">
+        
+        <div class ="categories">
+            <button class = "btn btn-success"  onclick="displayCategories()">Show the categories</button>
+            <div id = "deAfisat">
+           
+            </div>
+        </div>
+       
+        <div class ="results">
+            <div id = "details"></div>
+        </div>
+    </div>
+    <div class ="form-input">
+        <form class="form-group " action="" method="post">
+          <p><b>Complete the form</b></p> <br>
+    
+               <label for="idTag">ID</label>
+                <input type="text" class="input-field" id = "id" placeholder="ID">
+           
+                <label for="priceTag">Price</label>
+                <input type="text" class="input-field" id = "price" placeholder="Price">
+    
+                <label for="nameTag">Name</label>
+                <input type="text" class="input-field" id = "name" placeholder="Name">
+    
+                <label for="descriptionTag">Description</label>
+                <input type="text" class="input-field" id = "description" placeholder="Description">
+    
+                <label for="typeTag">Type</label>
+                <select class="form-control" id ="type" id="selectTypeTag">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <br>
+                <button  class="btn btn-success " name="btnTrimite" onmouseover="insertMenu()" > Trimite </button>
+           
+            
+          </form>
+    </div>
+</body>
+
+</html>
